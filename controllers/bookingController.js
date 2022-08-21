@@ -40,7 +40,11 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
           product_data: {
             name: `${tour.name} Tour`,
             description: tour.summary,
-            images: [`https://www.natours.dev/img/tours/${tour.imageCover}`]
+            images: [
+              `${req.protocol}://${req.get('host')}/img/tours/${
+                tour.imageCover
+              }`
+            ]
           }
         }
       }
@@ -85,15 +89,29 @@ const createBookingCheckout = async session => {
   const price = session.display_items[0].amount / 100;
   const dateId = session.metadata.book_date_id;
   const participants = session.display_items[0].quantity;
+
   await Booking.create({ tour, user, price });
+
+  console.log(typeof dateId);
+  console.log(dateId);
+  console.log(participants);
 
   const tourUpdate = await Tour.findById(tour);
   tourUpdate.startDates.map(dateObj => {
+    console.log("I'm outside loop");
+    console.log(typeof dateObj._id);
+    console.log(dateObj._id);
     if (JSON.stringify(dateObj._id) === JSON.stringify(dateId)) {
+      console.log("I'm in loop");
+      console.log(typeof dateObj.participants);
+      console.log(dateObj.participants);
+
       dateObj.participants += +participants;
       if (dateObj.participants >= tour.maxGroupSize) {
         dateObj.soldOut = true;
       }
+      console.log('Helllo KKKKKKKK');
+      console.log(dateObj.participants);
     }
     return dateObj;
   });

@@ -22,8 +22,8 @@ export const bookTour = async (tourId, dateId, participants) => {
   } catch (err) {
     console.log(err);
     showAlert('error', err);
-    // window.setTimeout(() => {
-    //   location.reload(true);
-    // }, 1500);
+    window.setTimeout(() => {
+      location.reload(true);
+    }, 1500);
   }
 };
