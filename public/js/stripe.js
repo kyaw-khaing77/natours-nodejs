@@ -9,10 +9,11 @@ export const bookTour = async (tourId, dateId, participants) => {
   try {
     // 1) Get checkout session from API
 
+    console(dateId, participants);
     const session = await axios(
       `/api/v1/bookings/checkout-session/${tourId}/dateId/${dateId}/participants/${participants}`
     );
-    // console.log(session);
+    console.log(session);
 
     // 2) Create checkout form + chanre credit card
     await stripe.redirectToCheckout({
@@ -21,5 +22,8 @@ export const bookTour = async (tourId, dateId, participants) => {
   } catch (err) {
     console.log(err);
     showAlert('error', err);
+    // window.setTimeout(() => {
+    //   location.reload(true);
+    // }, 1500);
   }
 };

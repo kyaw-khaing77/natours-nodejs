@@ -235,7 +235,9 @@ if (bookBtn) {
       const tourId = tour._id;
       bookBtn.textContent = 'Booking...';
       await bookTour(tourId, dateId, participants);
+      bookBtn.textContent = 'Booking';
     } catch (error) {
+      bookBtn.textContent = 'Booking';
       return showAlert(
         'error',
         'Please Select The Tour Date And The Participants Numbers '
