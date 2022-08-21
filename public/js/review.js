@@ -4,10 +4,9 @@ import { showAlert } from './alerts';
 
 export const createReview = async (tourId, review, rating) => {
   try {
-    console.log(tourId, review, rating);
     const res = await axios({
       method: 'POST',
-      url: `http://localhost:3000/api/v1/tours/${tourId}/reviews`,
+      url: `/api/v1/tours/${tourId}/reviews`,
       data: {
         review,
         rating
@@ -27,10 +26,9 @@ export const createReview = async (tourId, review, rating) => {
 
 export const updateReview = async (tourId, reviewId, review, rating) => {
   try {
-    console.log(tourId, reviewId, review, rating);
     const res = await axios({
       method: 'PATCH',
-      url: `http://localhost:3000/api/v1/tours/${tourId}/reviews/${reviewId}`,
+      url: `/api/v1/tours/${tourId}/reviews/${reviewId}`,
       data: {
         review,
         rating
@@ -52,7 +50,7 @@ export const deleteReview = async reviewId => {
   try {
     const res = await axios({
       method: 'DELETE',
-      url: `http://localhost:3000/api/v1/reviews/${reviewId}`
+      url: `/api/v1/reviews/${reviewId}`
     });
     if ((res.status = 204)) {
       showAlert('success', 'Successfully deleted your review');

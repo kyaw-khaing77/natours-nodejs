@@ -6,7 +6,7 @@ export const signup = async (name, email, password, confirmPassword) => {
   try {
     const res = await axios({
       method: 'POST',
-      url: 'http://localhost:3000/api/v1/users/signup',
+      url: '/api/v1/users/signup',
       data: {
         name,
         email,
@@ -30,7 +30,7 @@ export const forgetPassword = async email => {
   try {
     const res = await axios({
       method: 'POST',
-      url: 'http://localhost:3000/api/v1/users/forgotPassword',
+      url: '/api/v1/users/forgotPassword',
       data: {
         email
       }
@@ -51,7 +51,7 @@ export const resetPassword = async (password, confirmPassword) => {
   try {
     const res = await axios({
       method: 'PATCH',
-      url: `http://localhost:3000/api/v1/users/resetPassword/${token}`,
+      url: `/api/v1/users/resetPassword/${token}`,
       data: {
         password,
         confirmPassword

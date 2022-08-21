@@ -88,7 +88,7 @@ if (userDataForm) {
     form.append('name', document.getElementById('name').value);
     form.append('email', document.getElementById('email').value);
     form.append('photo', document.getElementById('photo').files[0]);
-    console.log(form);
+    // console.log(form);
 
     updateSettings(form, 'data');
   });
@@ -162,7 +162,6 @@ if (deleteReviewEl) {
       const parentNode = element.parentNode;
       parentNode.removeChild(element);
       parentNode.querySelector('.loading').classList.add('spinning');
-      console.log(parentNode);
 
       await deleteReview(reviewId);
     });
@@ -234,7 +233,6 @@ if (bookBtn) {
       const participants = tourParticipantsSelectBox.value;
       const { tour } = JSON.parse(tourDateSelectBox.dataset.tour);
       const tourId = tour._id;
-      console.log(dateId);
       bookBtn.textContent = 'Booking...';
       await bookTour(tourId, dateId, participants);
     } catch (error) {
