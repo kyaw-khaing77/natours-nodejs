@@ -27,15 +27,21 @@ exports.getTour = catchAsync(async (req, res, next) => {
     return next(new AppError('There is no tour with that name', 404));
   }
   //Checking user is booking or not
-  const booking = await Booking.find({
-    user: res.locals.user.id,
-    tour: tour.id
-  });
 
-  const review = await Review.find({
-    user: res.locals.user.id,
-    tour: tour.id
-  });
+  let booking = '';
+  let review = '';
+
+  if (res.locals.user) {
+    booking = await Booking.find({
+      user: res.locals.user.id,
+      tour: tour.id
+    });
+
+    review = await Review.find({
+      user: res.locals.user.id,
+      tour: tour.id
+    });
+  }
 
   //2)Build template
   //3)Render that template using data from 1)
