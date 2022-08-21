@@ -1,0 +1,11 @@
+extends base
+include _reviewCard
+
+block content
+    main.main
+            if reviews.length > 0
+                .card-container
+                        each review in reviews
+                            +reviewCard(review,myReviews)
+            else 
+                p.no-review-text You didn't still have a post.

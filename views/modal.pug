@@ -1,0 +1,33 @@
+mixin selectBox(name, value)
+     option(value={value})= name
+
+#myModal.modal
+  // Modal content
+  .modal-content
+    .modal-header
+      span.close &times;
+      .card__picture
+        .card__picture-overlay &nbsp;
+        img.card__picture-img(src=`/img/tours/${tour.imageCover}`, alt=`${tour.name}`)
+      h3.heading-tertirary.card__tertirary
+        span= tour.name
+    .modal-body
+      .model-body__form-container
+        .model-text-center
+          h2.heading-secondary.ma-bt-md Let&apos;s Travel Together!
+        form.form.form-user-data
+          .form__group
+            label.form__label Tour Date
+            select.form__input#tour-date-select(data-tour={tour})
+               option(disabled,selected) Select Tour Date
+               each startDateObj in tour.startDates
+                 - const date = startDateObj.startDate.toLocaleString('en-us', {month: 'long', year: 'numeric'})
+                      +selectBox(date, startDateObj.id)       
+      
+          .form__group
+            label.form__label Tour Participants
+            select.form__input#tour-participants-select
+              <option disable>First Choose Tour Date</option>
+
+    .modal-footer.right
+      btn.btn.btn--green.btn--small#book-btn Book
