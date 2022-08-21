@@ -24,7 +24,8 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     customer_email: req.user.email,
     client_reference_id: req.params.tourId,
     metadata: {
-      book_date_id: req.params.dateId
+      book_date_id: req.params.dateId,
+      participants_no: req.params.participants
     },
     line_items: [
       {
@@ -86,32 +87,19 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
 const createBookingCheckout = async session => {
   const tour = session.client_reference_id;
   const user = (await User.findOne({ email: session.customer_email })).id;
-  const price = session.display_items[0].amount / 100;
+  const price = session.amount_total / 100;
   const dateId = session.metadata.book_date_id;
-  const participants = session.display_items[0].quantity;
+  const participants = session.metadata.participants_no;
 
   await Booking.create({ tour, user, price });
 
-  console.log(typeof dateId);
-  console.log(dateId);
-  console.log(participants);
-
   const tourUpdate = await Tour.findById(tour);
   tourUpdate.startDates.map(dateObj => {
-    console.log("I'm outside loop");
-    console.log(typeof dateObj._id);
-    console.log(dateObj._id);
     if (JSON.stringify(dateObj._id) === JSON.stringify(dateId)) {
-      console.log("I'm in loop");
-      console.log(typeof dateObj.participants);
-      console.log(dateObj.participants);
-
       dateObj.participants += +participants;
       if (dateObj.participants >= tour.maxGroupSize) {
         dateObj.soldOut = true;
       }
-      console.log('Helllo KKKKKKKK');
-      console.log(dateObj.participants);
     }
     return dateObj;
   });
